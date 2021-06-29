@@ -6,6 +6,7 @@ from .forms import SubmitAttendanceForm
 import datetime as dt
 
 
+#
 class IndexView(LoginRequiredMixin, View):
     def get(self, request):
         form = SubmitAttendanceForm
@@ -32,12 +33,13 @@ class ResultView(View):
         obj.place = request.POST["place"]
         obj.in_out = request.POST["in_out"]
         obj.staff = request.user
-        obj.date = dt.datetime.now().date() - dt.timedelta(hours=9)  # 日をまたいだ時、日付が変わらないように
+        obj.date = dt.datetime.now().date() - dt.timedelta(hours=9)
         obj.time = dt.datetime.now().time()
         obj.save()
 
         if request.POST["in_out"] == '1':
-            comment = str(month) + "月" + str(day) + "日" + str(hour) + "時" + str(minute) + "分" + "出勤確認しました。今日も頑張りましょう！"
+            comment = str(month) + "月" + str(day) + "日" + str(hour) + "時" + str(
+                minute) + "分" + "出勤確認しました。"
         else:
             comment = str(month) + "月" + str(day) + "日" + str(hour) + "時" + str(minute) + "分" + "退勤確認しました。"
         context = {
